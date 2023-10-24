@@ -5,7 +5,4 @@ module Lib
 import Data.List (isInfixOf)
 
 containsKeywordInArg :: String -> [String] -> [Bool]
-containsKeywordInArg arg keywords = map (contains arg) keywords
-
-contains :: String -> String -> Bool
-contains arg keyword = keyword `isInfixOf` arg
+containsKeywordInArg arg keywords = map (\keyword -> keyword `isInfixOf` arg) keywords
