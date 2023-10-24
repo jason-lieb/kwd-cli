@@ -10,9 +10,8 @@ main :: IO ()
 main = do
   args <- getArgs
   arg <- checkNumOfArgs args
-  let keywordsInArg = containsKeywordInArg arg keywords
-  let anyKeywordInArg = elem True keywordsInArg
-  returnOutput anyKeywordInArg
+  let anyKeywordsInArg = containsKeywordInArg arg keywords
+  returnOutput anyKeywordsInArg
 
 checkNumOfArgs :: [String] -> IO String
 checkNumOfArgs args
