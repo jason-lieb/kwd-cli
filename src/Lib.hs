@@ -1,6 +1,11 @@
 module Lib
-    ( someFunc
+    ( containsKeywordInArg
     ) where
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+import Data.List (isInfixOf)
+
+containsKeywordInArg :: String -> [String] -> [Bool]
+containsKeywordInArg arg keywords = map (contains arg) keywords
+
+contains :: String -> String -> Bool
+contains arg keyword = keyword `isInfixOf` arg
