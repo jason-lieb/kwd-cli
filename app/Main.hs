@@ -11,7 +11,7 @@ main = do
   args <- getArgs
   arg <- checkNumOfArgs args
   let keywordsInArg = containsKeywordInArg arg keywords
-  let anyKeywordInArg = foldl (||) False keywordsInArg
+  let anyKeywordInArg = elem True keywordsInArg
   returnOutput anyKeywordInArg
 
 checkNumOfArgs :: [String] -> IO String
