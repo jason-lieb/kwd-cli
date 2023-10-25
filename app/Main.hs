@@ -15,9 +15,9 @@ main = do
 
 checkNumOfArgs :: [String] -> IO String
 checkNumOfArgs args
-    | length args > 1 = error "Too many arguments provided. Only one argument is allowed."
-    | null args = error "Not enough arguments provided. One argument is required."
-    | otherwise = return (head args)
+  | length args > 1 = error "Too many arguments provided. Only one argument is allowed."
+  | null args = error "Not enough arguments provided. One argument is required."
+  | otherwise = return (head args)
 
 returnOutput :: Bool -> IO ()
 returnOutput True = putStrLn "At least one keyword found!"
