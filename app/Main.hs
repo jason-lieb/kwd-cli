@@ -1,6 +1,6 @@
 module Main (main) where
 
-import Lib
+import Lib (containsKeywordInArg)
 import System.Environment
 
 keywords :: [String]
