@@ -2,7 +2,7 @@ module Lib
     ( containsKeywordInArg
     ) where
 
-import Data.List (isInfixOf)
+import qualified Data.Text as Text
 
-containsKeywordInArg :: String -> [String] -> Bool
-containsKeywordInArg arg keywords = any (\keyword -> keyword `isInfixOf` arg) keywords
+containsKeywordInArg :: [Text.Text] -> [Text.Text] -> Bool
+containsKeywordInArg = any . flip elem
