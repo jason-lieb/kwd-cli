@@ -4,9 +4,10 @@ module Main (main) where
 
 import System.Environment
 import Lib (containsKeywordInArg)
-import qualified Data.Text as Text
+import qualified Data.Text as T
+import Data.Text (Text)
 
-keywords :: [Text.Text]
+keywords :: [Text]
 keywords = ["blue", "green", "yellow", "orange", "red", "purple"]
 
 main :: IO ()
@@ -23,11 +24,11 @@ checkNumOfArgs args
   | null args = error "Not enough arguments provided. One argument is required."
   | otherwise = return $ head args
 
-splitOnWhitespaceAndPunctuation :: Text.Text -> [Text.Text]
-splitOnWhitespaceAndPunctuation = Text.split $ flip elem [' ', '.', ',', ';', '!', '?']
+splitOnWhitespaceAndPunctuation :: Text -> [Text]
+splitOnWhitespaceAndPunctuation = T.split $ flip elem (" .,;!?" :: String)
 
-formatArg :: String -> [Text.Text]
-formatArg = splitOnWhitespaceAndPunctuation . Text.toLower . Text.pack
+formatArg :: String -> [Text]
+formatArg = splitOnWhitespaceAndPunctuation . T.toLower . T.pack
 
 returnOutput :: Bool -> IO ()
 returnOutput True = putStrLn "At least one keyword found!"

@@ -2,7 +2,7 @@ module Lib
     ( containsKeywordInArg
     ) where
 
-import qualified Data.Text as Text
+import Data.Text (Text)
 
-containsKeywordInArg :: [Text.Text] -> [Text.Text] -> Bool
+containsKeywordInArg :: [Text] -> [Text] -> Bool
 containsKeywordInArg = any . flip elem
