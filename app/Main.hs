@@ -3,9 +3,11 @@
 module Main (main) where
 
 import System.Environment
-import Lib (containsKeywordInArg)
+import Lib (countKeywords, countNonKeywords)
 import qualified Data.Text as T
 import Data.Text (Text)
+import Data.List (sortBy)
+import Data.Ord (comparing)
 
 keywords :: [Text]
 keywords = ["blue", "green", "yellow", "orange", "red", "purple"]
@@ -15,8 +17,9 @@ main = do
   args <- getArgs
   stringArg <- checkNumOfArgs args
   let formattedArg = formatArg stringArg
-  let anyKeywordsInArg = containsKeywordInArg formattedArg keywords
-  returnOutput anyKeywordsInArg
+      keywordCount = sortKeywordCount . removeUnusedKeywords $ countKeywords formattedArg keywords
+      nonKeywordCount = countNonKeywords formattedArg keywords
+  returnOutput keywordCount nonKeywordCount
 
 checkNumOfArgs :: [String] -> IO String
 checkNumOfArgs args
@@ -30,6 +33,18 @@ splitOnWhitespaceAndPunctuation = T.split $ flip elem (" .,;!?" :: String)
 formatArg :: String -> [Text]
 formatArg = splitOnWhitespaceAndPunctuation . T.toLower . T.pack
 
-returnOutput :: Bool -> IO ()
-returnOutput True = putStrLn "At least one keyword found!"
-returnOutput False = putStrLn "No keywords found :("
+removeUnusedKeywords :: [(Text, Int)] -> [(Text, Int)]
+removeUnusedKeywords = filter ((/= 0) . snd)
+
+sortKeywordCount :: [(Text, Int)] -> [(Text, Int)]
+sortKeywordCount = sortBy (flip $ comparing snd)
+
+returnOutput :: [(Text, Int)] -> Int -> IO ()
+returnOutput keywordCount nonKeywordCount = do
+  putStrLn "Found keywords:"
+  mapM_ outputKeyword keywordCount
+  putStrLn ""
+  putStrLn $ "Non-keyword count: " ++ show nonKeywordCount
+
+outputKeyword :: (Text, Int) -> IO ()
+outputKeyword (keyword, count) = putStrLn $ T.unpack keyword ++ ": " ++ show count
